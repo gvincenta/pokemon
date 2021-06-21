@@ -1,39 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getPokemonDetail } from '../api';
 import Table from '../Components/Table';
-
-const CATCH_SUCCESS = 'CATCH_SUCCESS';
-const CATCH_FAIL = 'CATCH_FAIL';
-const CATCH_INIT = 'CATCH_INIT';
-
-//catch pokemon with 50% chance. if value < 0.5, then succeed.
-const catchPokemon = () => {
-    const randomValue = Math.random();
-    if (randomValue < 0.5) {
-        //50% chance of getting a pokemon
-        return CATCH_SUCCESS;
-    }
-    return CATCH_FAIL;
-};
+import Catch from './Catch';
 
 export default function Detail() {
     const [data, setData] = useState({ moves: [], types: [] });
-    const [catchState, setCatchState] = useState({
-        status: CATCH_INIT,
-        name: '',
-        nickname: '',
-    });
-
     let location = useLocation();
-    console.log({ location });
+
+    const url = useMemo(() => {
+        const queryParams = new URLSearchParams(location.search);
+        return queryParams.get('fetch');
+    }, [location.search]);
 
     useEffect(() => {
-        const queryParams = new URLSearchParams(location.search);
-        const fetch = queryParams.get('fetch');
-        console.log('I RUN DETEAILS', { fetch });
+        console.log('I RUN DETEAILS', { url });
 
-        getPokemonDetail(fetch).then((res) => {
+        getPokemonDetail(url).then((res) => {
             console.log({ res });
             const { moves, types, forms } = res;
             const movesList = moves.map(({ move }) => ({
@@ -78,7 +61,7 @@ export default function Detail() {
                 ]}
             />
 
-            <button onClick={catchPokemon()}> Catch Pokemon </button>
+            <Catch name={data?.forms?.[0]?.name} url={url} />
         </div>
     );
 }
