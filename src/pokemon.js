@@ -26,7 +26,7 @@ export const CREATE_POKEMON_NICKNAME_VALID = 'CREATE_POKEMON_NICKNAME_VALID';
 } */
 
 /* local storage related interface */
-const getMyPokemons = () => {
+export const getMyPokemons = () => {
     const currentStorage = JSON.parse(localStorage.getItem(MY_POKEMON_LIST));
     if (!Array.isArray(currentStorage)) {
         return [];
@@ -40,10 +40,10 @@ const addMyPokemon = ({ name, nickname, url }) => {
     localStorage.setItem(MY_POKEMON_LIST, JSON.stringify(currentStorage));
 };
 
-const removeMyPokemon = ({ name, nickname, url }) => {
+const removeMyPokemon = (pokemon) => {
     const currentStorage = getMyPokemons();
-    const removeIndex = currentStorage.findIndex(
-        (v) => v.nickname === nickname && v.name === name && v.url === url
+    const removeIndex = currentStorage.findIndex((currentPokemon) =>
+        isEqual(currentPokemon, pokemon)
     );
     currentStorage.splice(removeIndex, 1);
     localStorage.setItem(MY_POKEMON_LIST, JSON.stringify(currentStorage));
@@ -63,16 +63,68 @@ export const removePokemon = ({ name, nickname, url }) => {
     removeMyPokemon({ name, nickname, url });
     return REMOVE_POKEMON_SUCCESS;
 };
+
+/* display owned total in format: 
+[
+    {
+        name: pokemon's name,
+        url: pokemon's url,
+        ownedTotal: how many has been catched ,
+    },
+    {
+        name: pokemon's name,
+        url: pokemon's url,
+        ownedTotal: how many has been catched ,
+    }
+] */
+export const getOwnedTotals = (pokemonList) => {
+    const currentPokemonList = pokemonList.map(({ name, url }) => ({
+        name,
+        url,
+        ownedTotal: 0,
+    }));
+    const currentStorage = getMyPokemons();
+    const existingCounter = currentStorage.reduce((result, currentPokemon) => {
+        const index = result.findIndex((pokemon) =>
+            isEqualSpecies(pokemon, currentPokemon)
+        );
+        if (index !== -1) {
+            const pokemonData = result[index];
+            result.splice(index, 1, {
+                ...pokemonData,
+                ownedTotal: pokemonData.ownedTotal + 1,
+            });
+        }
+        return result;
+    }, currentPokemonList);
+
+    return existingCounter;
+};
 /* helper functions */
-const isEqual = (existingPokemon, newPokemon) => {
+const isEqualNickname = (existingPokemon, newPokemon) => {
     return existingPokemon.nickname === newPokemon.nickname;
+};
+
+export const isEqual = (firstPokemon, secondPokemon) => {
+    return (
+        firstPokemon.nickname === secondPokemon.nickname &&
+        firstPokemon.name === secondPokemon.name &&
+        firstPokemon.url === secondPokemon.url
+    );
+};
+
+export const isEqualSpecies = (firstPokemon, secondPokemon) => {
+    return (
+        firstPokemon.name === secondPokemon.name &&
+        firstPokemon.url === secondPokemon.url
+    );
 };
 
 const validateNickname = (newPokemon) => {
     if (newPokemon.nickname?.length > 0) {
         const existingPokemons = getMyPokemons();
         const hasDuplicate = existingPokemons.findIndex((existingPokemon) =>
-            isEqual(existingPokemon, newPokemon)
+            isEqualNickname(existingPokemon, newPokemon)
         );
         if (hasDuplicate !== -1) {
             return CREATE_POKEMON_FAIL_ALREADY_EXISTS;

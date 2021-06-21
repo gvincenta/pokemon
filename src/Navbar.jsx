@@ -8,7 +8,7 @@ export default function Navbar() {
                     <Link to="/pokemons">Pokemon List</Link>
                 </li>
                 <li>
-                    <Link to="/myPokemons">My Pokemon List</Link>
+                    <Link to="/mypokemons">My Pokemon List</Link>
                 </li>
             </ul>
         </nav>
