@@ -4,10 +4,18 @@ import Navbar from './Navbar';
 import List from './Pages/List';
 import Detail from './Pages/Detail';
 import MyList from './Pages/MyList';
+import BacgkroundImage from './background.jpg';
+
 export default function App() {
     return (
         <Router>
-            <div>
+            <div
+                style={{
+                    backgroundImage: `url(${BacgkroundImage})`,
+                    height: '100vh',
+                    width: '100wh',
+                }}
+            >
                 <Navbar />
 
                 <Switch>
