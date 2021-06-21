@@ -28,6 +28,10 @@ export default function List() {
             });
     };
 
+    const onClick = (e, { name, url }) => {
+        window.location.href = `/pokemon/?fetch=${url}`;
+    };
+
     return (
         <div>
             <Table
@@ -39,13 +43,16 @@ export default function List() {
                     {
                         title: 'Name',
                         accessor: 'name',
-                        onDisplay: ({ name, url }) => (
-                            <a href={`/pokemon/?fetch=${url}`}>{name}</a>
-                        ),
                     },
                     {
-                        title: 'Owned Total',
+                        title: 'Owned',
                         accessor: 'ownedTotal',
+                    },
+                ]}
+                actions={[
+                    {
+                        title: 'View',
+                        onClick: onClick,
                     },
                 ]}
             />
