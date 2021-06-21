@@ -13,7 +13,7 @@ export default function MyList() {
             <Table
                 data={data}
                 total={data.length}
-                hasNextPage={(page, limit) => page * limit + 1 < data.length}
+                hasNextPage={(page, limit) => (page + 1) * limit < data.length}
                 columns={[
                     {
                         title: 'Name',
