@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom';
 import { getPokemonDetail } from '../api';
 import Table from '../Components/Table';
 import Catch from './Catch';
+import Accordion from '../Components/Accordion';
+import FlexRow from '../Components/FlexRow';
 
 export default function Detail() {
     const [data, setData] = useState({ moves: [], types: [] });
@@ -14,15 +16,14 @@ export default function Detail() {
     }, [location.search]);
 
     useEffect(() => {
-        console.log('I RUN DETEAILS', { url });
-
         getPokemonDetail(url).then((res) => {
             console.log({ res });
             const { moves, types, forms } = res;
             const movesList = moves.map(({ move }) => ({
+                //flatten moves
                 move: move.name,
             }));
-            const typesList = types
+            const typesList = types //flatten types and sort by slot
                 .map(({ slot, type }) => ({
                     type: type.name,
                     slot,
@@ -36,31 +37,25 @@ export default function Detail() {
 
     return (
         <div>
-            <p> Name: {data?.forms?.[0]?.name ?? '???'} </p>
-            {/* <p> Moves: </p> */}
-            {/* <Table 
-                data={data.moves} 
-                columns={[{
-                    title: 'Name',
-                    accessor: 'move'
-                }]}
-            /> */}
+            <p>Name: {data?.forms?.[0]?.name ?? '???'} </p>
 
-            <p> Types: </p>
-            <Table
-                data={data.types}
-                columns={[
+            <Accordion
+                content={[
                     {
-                        title: 'Slot',
-                        accessor: 'slot',
+                        header: <div> Moves: </div>,
+                        collapsible: (
+                            <FlexRow data={data.moves} accessor="move" />
+                        ),
                     },
                     {
-                        title: 'Name',
-                        accessor: 'type',
+                        header: <div> Types: </div>,
+                        collapsible: (
+                            <FlexRow data={data.types} accessor="type" />
+                        ),
                     },
                 ]}
             />
-
+            <div> Catch! </div>
             <Catch name={data?.forms?.[0]?.name} url={url} />
         </div>
     );
