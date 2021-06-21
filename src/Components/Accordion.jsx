@@ -1,4 +1,20 @@
 import React, { useState } from 'react';
+import styled from '@emotion/styled';
+const Header = styled.div`
+    text-transform: uppercase;
+    text-decoration: underline;
+    justify-content: center;
+    padding: 5%;
+    background-color: grey;
+    cursor: pointer;
+`;
+const MainContainer = styled.div`
+    padding: auto;
+    display: grid;
+    row-gap: 10px;
+    margin-top: 15px;
+    grid-template-rows: auto auto;
+`;
 
 export default function Accordion({ content }) {
     const [panel, setPanel] = useState(null);
@@ -10,21 +26,20 @@ export default function Accordion({ content }) {
         setPanel(name);
     };
     return (
-        <div>
+        <MainContainer>
             {content.map(({ header, collapsible }, index) => (
                 <>
-                    <div
-                        style={{ backgroundColor: 'grey' }}
+                    <Header
                         onClick={() => {
                             changePanel(index);
                         }}
                     >
                         {' '}
                         {header}{' '}
-                    </div>
+                    </Header>
                     {panel === index ? <> {collapsible} </> : null}
                 </>
             ))}
-        </div>
+        </MainContainer>
     );
 }

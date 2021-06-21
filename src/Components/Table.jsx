@@ -1,8 +1,52 @@
 import React, { useState, useEffect } from 'react';
 
-const PAGE_LIMIT_OPTIONS = [1, 5, 10, 15, 20];
-export const PAGE_LIMIT = 20;
+import styled from '@emotion/styled';
+import Button from '../Components/Button';
+const PAGE_LIMIT_OPTIONS = [5, 10, 15, 20];
+export const PAGE_LIMIT = 10;
+const MainContainer = styled.div`
+    margin-top: 20px;
+`;
 
+const ToolbarContainer = styled.div`
+    grid-template-columns: auto auto auto;
+    background-color: #ff8f36;
+    display: grid;
+    padding: auto;
+    margin: auto;
+`;
+
+const ToolbarItem = styled.div`
+    padding: 2%;
+`;
+const ToolbarItemCenter = styled.div`
+    padding: 2%;
+    text-align: center;
+`;
+const ToolbarItemRight = styled.div`
+    padding: 2%;
+    text-align: right;
+`;
+const Select = styled.select`
+    padding: 6px 12px;
+    border-radius: 4px;
+`;
+
+const Table = styled.table`
+    background-color: #b7ced6;
+    padding: 5%;
+    margin: auto;
+    border: 1px solid black;
+    border-radius: 4px;
+`;
+const TableCell = styled.td`
+    padding: auto;
+    text-align: center;
+`;
+const TableHeadingCell = styled.th`
+    padding: 5px;
+    text-align: center;
+`;
 export default function List({
     data,
     columns,
@@ -47,31 +91,60 @@ export default function List({
         }
     }, [onChangePage]);
     return (
-        <>
-            <p> Total: {total} </p>
-            {page > 0 && <button onClick={onPreviousPage}> Previous </button>}
-            {hasNextPage && hasNextPage(page, limit) && (
-                <button onClick={onNextPage}> Next </button>
-            )}
-            <select
-                name="pokemons per page"
-                value={limit}
-                onChange={onPageLimitChange}
-            >
-                {' '}
-                {PAGE_LIMIT_OPTIONS.map((v) => (
-                    <option key={v} value={v}>
+        <MainContainer>
+            <ToolbarContainer>
+                <ToolbarItem>
+                    {' '}
+                    <Button disabled={page === 0} onClick={onPreviousPage}>
                         {' '}
-                        {v}{' '}
-                    </option>
-                ))}{' '}
-            </select>
-            <table>
+                        &lt;{' '}
+                    </Button>{' '}
+                </ToolbarItem>
+                <ToolbarItemCenter>
+                    {' '}
+                    Page {page + 1} / {Math.ceil(total / limit)}{' '}
+                </ToolbarItemCenter>
+                <ToolbarItemRight>
+                    {' '}
+                    <Button
+                        disabled={
+                            hasNextPage ? !hasNextPage(page, limit) : true
+                        }
+                        onClick={onNextPage}
+                    >
+                        {' '}
+                        &gt;{' '}
+                    </Button>{' '}
+                </ToolbarItemRight>
+                <ToolbarItem>
+                    {' '}
+                    <Select
+                        name="pokemons per page"
+                        value={limit}
+                        onChange={onPageLimitChange}
+                    >
+                        {' '}
+                        {PAGE_LIMIT_OPTIONS.map((v) => (
+                            <option key={v} value={v}>
+                                {' '}
+                                {v}{' '}
+                            </option>
+                        ))}{' '}
+                    </Select>{' '}
+                </ToolbarItem>
+                <ToolbarItemCenter> Total: {total} </ToolbarItemCenter>
+            </ToolbarContainer>
+
+            <Table>
                 <thead>
                     <tr>
                         {columns.map(({ title }, index) => (
-                            <th key={`td-${index}-${title}`}> {title} </th>
+                            <TableHeadingCell key={`td-${index}-${title}`}>
+                                {' '}
+                                {title}{' '}
+                            </TableHeadingCell>
                         ))}
+                        <TableHeadingCell> Actions </TableHeadingCell>
                     </tr>
                 </thead>
                 <tbody>
@@ -81,17 +154,19 @@ export default function List({
                                   {columns.map(({ accessor, onDisplay }) => {
                                       //   console.log({value, accessor})
                                       return (
-                                          <td key={`td-${index}-${accessor}`}>
+                                          <TableCell
+                                              key={`td-${index}-${accessor}`}
+                                          >
                                               {' '}
                                               {onDisplay
                                                   ? onDisplay(value)
                                                   : value[accessor]}{' '}
-                                          </td>
+                                          </TableCell>
                                       );
                                   })}
-                                  <td>
+                                  <TableCell>
                                       {actions.map(({ title, onClick }) => (
-                                          <button
+                                          <Button
                                               key={`${title}-${index}`}
                                               onClick={(e) => {
                                                   onClick(e, value);
@@ -99,14 +174,14 @@ export default function List({
                                           >
                                               {' '}
                                               {title}{' '}
-                                          </button>
+                                          </Button>
                                       ))}
-                                  </td>
+                                  </TableCell>
                               </tr>
                           ))
                         : 'Not Found.'}
                 </tbody>
-            </table>
-        </>
+            </Table>
+        </MainContainer>
     );
 }

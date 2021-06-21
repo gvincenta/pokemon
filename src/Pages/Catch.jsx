@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { getPokemonDetail } from '../api';
-import Table from '../Components/Table';
+import styled from '@emotion/styled';
 import {
     createPokemon,
     CREATE_POKEMON_FAIL_ALREADY_EXISTS,
@@ -14,6 +13,41 @@ const CATCH_SUCCESS = 'CATCH_SUCCESS';
 const CATCH_FAIL = 'CATCH_FAIL';
 const CATCH_INIT = 'CATCH_INIT';
 
+const MainContainer = styled.div`
+    padding: auto;
+    display: grid;
+    row-gap: 10px;
+    margin-top: 15px;
+    grid-template-columns: auto auto;
+    margin-bottom: 15px;
+`;
+
+const BackgroundContainer = styled.div`
+    background-color: grey;
+    padding: 5%;
+    display: grid;
+    row-gap: 10px;
+`;
+
+const SuccessContainer = styled.div`
+    background-color: #04aa6d;
+    color: white;
+`;
+const DangerContainer = styled.div`
+    background-color: #bb0f0f;
+    color: white;
+`;
+const Button = styled.button`
+    text-align: center;
+    background-color: #337ab7;
+    padding: 6px 12px;
+    color: white;
+    width: 100%;
+    border-radius: 4px;
+    &:disabled {
+        background-color: #b7ced6;
+    }
+`;
 //catch pokemon with 50% chance. if value < 0.5, then succeed.
 const catchPokemon = () => {
     const randomValue = Math.random();
@@ -55,15 +89,20 @@ export default function Catch({ name, url }) {
     const displayCreateStatusMessage = () => {
         switch (createStatus) {
             case CREATE_POKEMON_SUCCESS:
-                return <p> Succeed!</p>;
+                return <SuccessContainer> Succeed!</SuccessContainer>;
             case CREATE_POKEMON_FAIL_EMPTY_NICKNAME:
-                return <p> Nickname cannot be left empty</p>;
+                return (
+                    <DangerContainer>
+                        {' '}
+                        Nickname cannot be left empty
+                    </DangerContainer>
+                );
             case CREATE_POKEMON_FAIL_ALREADY_EXISTS:
                 return (
-                    <p>
+                    <DangerContainer>
                         {' '}
                         Nickname already exists, please choose another nickname
-                    </p>
+                    </DangerContainer>
                 );
             default:
                 return null;
@@ -73,32 +112,37 @@ export default function Catch({ name, url }) {
         switch (catchState.status) {
             case CATCH_INIT:
                 return (
-                    <button onClick={onCatchPokemon}> Catch Pokemon </button>
+                    <Button onClick={onCatchPokemon}> Catch Pokemon </Button>
                 );
             case CATCH_SUCCESS:
                 return (
                     <>
-                        <label> Nickname: </label>
-                        <input
-                            value={catchState.nickname}
-                            onChange={(e) => {
-                                setCatchState({
-                                    ...catchState,
-                                    nickname: e.target.value,
-                                });
-                            }}
-                        />
-                        <button onClick={onCreatePokemon}> Save </button>
+                        <MainContainer>
+                            <label> Nickname: </label>
+                            <input
+                                value={catchState.nickname}
+                                onChange={(e) => {
+                                    setCatchState({
+                                        ...catchState,
+                                        nickname: e.target.value,
+                                    });
+                                }}
+                            />
+                        </MainContainer>
+                        <Button onClick={onCreatePokemon}> Save </Button>
                     </>
                 );
             case CATCH_FAIL:
                 return (
                     <>
-                        <button onClick={onCatchPokemon}>
+                        <Button onClick={onCatchPokemon}>
                             {' '}
                             Catch Pokemon{' '}
-                        </button>
-                        <p> Could not catch pokemon, please try again.</p>
+                        </Button>
+                        <DangerContainer>
+                            {' '}
+                            Could not catch pokemon, please try again.
+                        </DangerContainer>
                     </>
                 );
             default:
@@ -106,9 +150,9 @@ export default function Catch({ name, url }) {
         }
     };
     return (
-        <div>
+        <BackgroundContainer>
             {displayCatch()}
             {displayCreateStatusMessage()}
-        </div>
+        </BackgroundContainer>
     );
 }

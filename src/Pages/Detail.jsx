@@ -5,6 +5,15 @@ import Table from '../Components/Table';
 import Catch from './Catch';
 import Accordion from '../Components/Accordion';
 import FlexRow from '../Components/FlexRow';
+import styled from '@emotion/styled';
+const MainContainer = styled.div`
+    padding: 5%;
+`;
+
+const Name = styled.div`
+    text-align: center;
+    text-transform: uppercase;
+`;
 
 export default function Detail() {
     const [data, setData] = useState({ moves: [], types: [] });
@@ -36,27 +45,25 @@ export default function Detail() {
     }, []);
 
     return (
-        <div>
-            <p>Name: {data?.forms?.[0]?.name ?? '???'} </p>
-
+        <MainContainer>
+            <Name> {data?.forms?.[0]?.name ?? '???'} </Name>
+            <Catch name={data?.forms?.[0]?.name} url={url} />
             <Accordion
                 content={[
                     {
-                        header: <div> Moves: </div>,
+                        header: <Name> Moves </Name>,
                         collapsible: (
                             <FlexRow data={data.moves} accessor="move" />
                         ),
                     },
                     {
-                        header: <div> Types: </div>,
+                        header: <Name> Types </Name>,
                         collapsible: (
                             <FlexRow data={data.types} accessor="type" />
                         ),
                     },
                 ]}
             />
-            <div> Catch! </div>
-            <Catch name={data?.forms?.[0]?.name} url={url} />
-        </div>
+        </MainContainer>
     );
 }
