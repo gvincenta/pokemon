@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import styled from '@emotion/styled';
-import Button from '../Components/Button';
+import { ViewButton, PageButton } from '../Components/Button';
 const PAGE_LIMIT_OPTIONS = [5, 10, 15, 20];
 export const PAGE_LIMIT = 10;
 const MainContainer = styled.div`
@@ -10,9 +10,9 @@ const MainContainer = styled.div`
 
 const ToolbarContainer = styled.div`
     grid-template-columns: auto auto auto;
-    background-color: #ff8f36;
+    bottom: 0;
     display: grid;
-    padding: auto;
+    padding: 5%;
     margin: auto;
 `;
 
@@ -33,20 +33,28 @@ const Select = styled.select`
 `;
 
 const Table = styled.table`
-    background-color: #b7ced6;
     padding: 5%;
     margin: auto;
-    border: 1px solid black;
     border-radius: 4px;
+    box-shadow: 5px 5px 5px grey;
 `;
 const TableCell = styled.td`
-    padding: auto;
-    text-align: center;
-`;
-const TableHeadingCell = styled.th`
     padding: 5px;
-    text-align: center;
+    padding-left: 10px;
+    padding-right: 20px;
+    text-align: left;
+    background-color: #faf0f0;
+    border-radius: 4px;
 `;
+const TableHeadingCell = styled.td`
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 20px;
+    text-align: left;
+    background-color: #ef5350;
+    border-radius: 4px;
+`;
+
 export default function List({
     data,
     columns,
@@ -89,52 +97,9 @@ export default function List({
         if (onChangePage) {
             onChangePage(page, limit);
         }
-    }, [onChangePage]);
+    }, []);
     return (
         <MainContainer>
-            <ToolbarContainer>
-                <ToolbarItem>
-                    {' '}
-                    <Button disabled={page === 0} onClick={onPreviousPage}>
-                        {' '}
-                        &lt;{' '}
-                    </Button>{' '}
-                </ToolbarItem>
-                <ToolbarItemCenter>
-                    {' '}
-                    Page {page + 1} / {Math.ceil(total / limit)}{' '}
-                </ToolbarItemCenter>
-                <ToolbarItemRight>
-                    {' '}
-                    <Button
-                        disabled={
-                            hasNextPage ? !hasNextPage(page, limit) : true
-                        }
-                        onClick={onNextPage}
-                    >
-                        {' '}
-                        &gt;{' '}
-                    </Button>{' '}
-                </ToolbarItemRight>
-                <ToolbarItem>
-                    {' '}
-                    <Select
-                        name="pokemons per page"
-                        value={limit}
-                        onChange={onPageLimitChange}
-                    >
-                        {' '}
-                        {PAGE_LIMIT_OPTIONS.map((v) => (
-                            <option key={v} value={v}>
-                                {' '}
-                                {v}{' '}
-                            </option>
-                        ))}{' '}
-                    </Select>{' '}
-                </ToolbarItem>
-                <ToolbarItemCenter> Total: {total} </ToolbarItemCenter>
-            </ToolbarContainer>
-
             <Table>
                 <thead>
                     <tr>
@@ -144,7 +109,6 @@ export default function List({
                                 {title}{' '}
                             </TableHeadingCell>
                         ))}
-                        <TableHeadingCell> Actions </TableHeadingCell>
                     </tr>
                 </thead>
                 <tbody>
@@ -166,7 +130,7 @@ export default function List({
                                   })}
                                   <TableCell>
                                       {actions.map(({ title, onClick }) => (
-                                          <Button
+                                          <ViewButton
                                               key={`${title}-${index}`}
                                               onClick={(e) => {
                                                   onClick(e, value);
@@ -174,7 +138,7 @@ export default function List({
                                           >
                                               {' '}
                                               {title}{' '}
-                                          </Button>
+                                          </ViewButton>
                                       ))}
                                   </TableCell>
                               </tr>
@@ -182,6 +146,48 @@ export default function List({
                         : 'Not Found.'}
                 </tbody>
             </Table>
+            <ToolbarContainer>
+                <ToolbarItem>
+                    {' '}
+                    <PageButton disabled={page === 0} onClick={onPreviousPage}>
+                        {' '}
+                        &lt;{' '}
+                    </PageButton>{' '}
+                </ToolbarItem>
+                <ToolbarItemCenter>
+                    {' '}
+                    Page {page + 1} / {Math.ceil(total / limit)}{' '}
+                </ToolbarItemCenter>
+                <ToolbarItemRight>
+                    {' '}
+                    <PageButton
+                        disabled={
+                            hasNextPage ? !hasNextPage(page, limit) : true
+                        }
+                        onClick={onNextPage}
+                    >
+                        {' '}
+                        &gt;{' '}
+                    </PageButton>{' '}
+                </ToolbarItemRight>
+                <ToolbarItem>
+                    {' '}
+                    <Select
+                        name="pokemons per page"
+                        value={limit}
+                        onChange={onPageLimitChange}
+                    >
+                        {' '}
+                        {PAGE_LIMIT_OPTIONS.map((v) => (
+                            <option key={v} value={v}>
+                                {' '}
+                                {v}{' '}
+                            </option>
+                        ))}{' '}
+                    </Select>{' '}
+                </ToolbarItem>
+                <ToolbarItemCenter> Total: {total} </ToolbarItemCenter>
+            </ToolbarContainer>
         </MainContainer>
     );
 }
