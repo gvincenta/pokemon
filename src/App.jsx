@@ -5,17 +5,23 @@ import List from './Pages/List';
 import Detail from './Pages/Detail';
 import MyList from './Pages/MyList';
 import BacgkroundImage from './background.jpg';
+import PokemonLogo from './pokemonLogo.png';
+import styled from '@emotion/styled';
+
+const Image = styled.img`
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 90%;
+`;
 
 export default function App() {
     return (
         <Router>
-            <div
-                style={{
-                    backgroundImage: `url(${BacgkroundImage})`,
-                    height: '100vh',
-                    width: '100wh',
-                }}
-            >
+            <div>
+                <Image src={PokemonLogo} />
+
                 <Navbar />
 
                 <Switch>
