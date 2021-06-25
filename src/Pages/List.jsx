@@ -2,6 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { getAllPokemons } from '../api';
 import { getOwnedTotals } from '../pokemon';
 import Table from '../Components/Table';
+import Grid from '../Components/Grid';
+import Pagination from '../Components/Pagination';
+
+import Detail from './Detail';
+import Navbar from '../Navbar';
+
+const LIST_VIEW = 'LIST_VIEW';
+const DETAIL_VIEW = 'DETAIL_VIEW';
 
 export default function List() {
     const [data, setData] = useState({
@@ -9,6 +17,11 @@ export default function List() {
         next: '',
         previous: null,
         results: [],
+    });
+
+    const [state, setState] = useState({
+        view: LIST_VIEW,
+        props: {},
     });
 
     const onChangePage = (page, limit) => {
@@ -29,33 +42,50 @@ export default function List() {
     };
 
     const onClick = (e, { name, url }) => {
-        window.location.href = `/pokemon/?fetch=${url}`;
+        setState({
+            view: DETAIL_VIEW,
+            props: {
+                url,
+            },
+        });
     };
-
-    return (
-        <div>
-            <Table
-                data={data.results}
-                total={data.count}
-                hasNextPage={() => data.next}
-                onChangePage={onChangePage}
-                columns={[
-                    {
-                        title: 'Name',
-                        accessor: 'name',
-                    },
-                    {
-                        title: 'Owned',
-                        accessor: 'ownedTotal',
-                    },
-                ]}
-                actions={[
-                    {
-                        title: 'View',
-                        onClick: onClick,
-                    },
-                ]}
-            />
-        </div>
-    );
+    switch (state.view) {
+        case DETAIL_VIEW:
+            return (
+                <Detail
+                    {...state.props}
+                    onClose={() => {
+                        setState({
+                            view: LIST_VIEW,
+                            props: {},
+                        });
+                    }}
+                />
+            );
+        default:
+            return (
+                <div>
+                    <Navbar />
+                    <Grid
+                        data={data.results}
+                        onClick={onClick}
+                        columns={[
+                            {
+                                title: 'Name',
+                                accessor: 'name',
+                            },
+                            {
+                                title: 'Owned',
+                                accessor: 'ownedTotal',
+                            },
+                        ]}
+                    />
+                    <Pagination
+                        total={data.count}
+                        hasNextPage={() => data.next}
+                        onChangePage={onChangePage}
+                    />
+                </div>
+            );
+    }
 }
