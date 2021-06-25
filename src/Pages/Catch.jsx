@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
+import Button from '../Components/Button';
 import {
     createPokemon,
     CREATE_POKEMON_FAIL_ALREADY_EXISTS,
@@ -8,46 +9,49 @@ import {
     CREATE_POKEMON_SUCCESS,
     CREATE_POKEMON_INIT,
 } from '../pokemon';
+import PokeBall from '../pokeball.png';
 
 const CATCH_SUCCESS = 'CATCH_SUCCESS';
 const CATCH_FAIL = 'CATCH_FAIL';
 const CATCH_INIT = 'CATCH_INIT';
 
 const MainContainer = styled.div`
-    padding: auto;
-    display: grid;
-    row-gap: 10px;
-    margin-top: 15px;
-    grid-template-columns: auto auto;
-    margin-bottom: 15px;
+    margin: auto;
+    text-align: center;
 `;
 
 const BackgroundContainer = styled.div`
-    background-color: grey;
     padding: 5%;
     display: grid;
     row-gap: 10px;
 `;
 
 const SuccessContainer = styled.div`
-    background-color: #04aa6d;
-    color: white;
+    color: #04aa6d;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
 `;
 const DangerContainer = styled.div`
-    background-color: #bb0f0f;
-    color: white;
-`;
-const Button = styled.button`
+    color: #f3110d;
     text-align: center;
-    background-color: #337ab7;
-    padding: 6px 12px;
-    color: white;
-    width: 100%;
-    border-radius: 4px;
-    &:disabled {
-        background-color: #b7ced6;
-    }
+
+    font-weight: bold;
+    font-size: 20px;
 `;
+const Label = styled.label`
+    font-family: PokemonSolid;
+    color: #3366ff;
+`;
+
+const Input = styled.input`
+    font-size: 20px;
+    max-width: 50vw;
+`;
+
+const CatchButton = ({ children, onClick }) => {
+    return <img src={PokeBall} width={300} onClick={onClick}></img>;
+};
 //catch pokemon with 50% chance. if value < 0.5, then succeed.
 const catchPokemon = () => {
     const randomValue = Math.random();
@@ -112,14 +116,17 @@ export default function Catch({ name, url }) {
         switch (catchState.status) {
             case CATCH_INIT:
                 return (
-                    <Button onClick={onCatchPokemon}> Catch Pokemon </Button>
+                    <CatchButton onClick={onCatchPokemon}>
+                        {' '}
+                        Catch Pokemon{' '}
+                    </CatchButton>
                 );
             case CATCH_SUCCESS:
                 return (
                     <>
                         <MainContainer>
-                            <label> Nickname: </label>
-                            <input
+                            <Label> Nickname: </Label>
+                            <Input
                                 value={catchState.nickname}
                                 onChange={(e) => {
                                     setCatchState({
@@ -128,17 +135,23 @@ export default function Catch({ name, url }) {
                                     });
                                 }}
                             />
+                            <Button
+                                onClick={onCreatePokemon}
+                                style={{ marginTop: '10px' }}
+                            >
+                                {' '}
+                                Save{' '}
+                            </Button>
                         </MainContainer>
-                        <Button onClick={onCreatePokemon}> Save </Button>
                     </>
                 );
             case CATCH_FAIL:
                 return (
                     <>
-                        <Button onClick={onCatchPokemon}>
+                        <CatchButton onClick={onCatchPokemon}>
                             {' '}
                             Catch Pokemon{' '}
-                        </Button>
+                        </CatchButton>
                         <DangerContainer>
                             {' '}
                             Could not catch pokemon, please try again.
