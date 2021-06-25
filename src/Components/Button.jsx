@@ -1,28 +1,34 @@
 import React from 'react';
 import styled from '@emotion/styled';
-
+//#ef5350
 const Button = styled.button`
     text-align: center;
-    background-color: #ef5350;
+    background-color: #3366ff;
     padding: 6px 12px;
     color: white;
-    border-radius: 4px;
+    font-weight: bold;
+    border: none;
+    border-radius: 20px;
     &:disabled {
-        background-color: #faf0f0;
+        background-color: #96a9e2;
     }
 `;
 
-export const NavigationButton = styled.button`
+export const TextButton = styled.button`
     border-radius: 20px;
     padding-top: 12px;
+    font-family: ${(props) =>
+        props.active ? 'PokemonSolid' : 'PokemonHollow'};
+    text-transform: uppercase;
+    font-size: 20px;
     padding-bottom: 12px;
-    color: white;
+    color: #3366ff;
     font-weight: bold;
     padding-left: 20px;
     padding-right: 20px;
-    background-color: #ef5350;
-    border-color: #ef5350;
-    box-shadow: 5px 5px 5px grey;
+    background-color: #eeeeaa;
+    border-color: #eeeeaa;
+    border: 0px;
 `;
 
 export const ViewButton = styled.button`
@@ -35,12 +41,15 @@ export const ViewButton = styled.button`
 `;
 export const PageButton = styled.button`
     text-align: center;
-    background-color: #ef5350;
+    background-color: #3366ff;
     padding: 6px 12px;
     color: white;
+    font-weight: bold;
+    border: none;
     border-radius: 100%;
+    max-height: 40px;
     &:disabled {
-        background-color: #faf0f0;
+        background-color: #96a9e2;
     }
 `;
 
