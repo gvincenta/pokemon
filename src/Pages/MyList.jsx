@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Table from '../Components/Table';
 import { getMyPokemons, removePokemon, isEqual } from '../pokemon';
+import Navbar from '../Navbar';
+import Pagination from '../Components/Pagination';
 
 export default function MyList() {
     const [data, setData] = useState(getMyPokemons());
@@ -8,12 +10,21 @@ export default function MyList() {
         removePokemon(pokemon);
         setData(getMyPokemons());
     };
+
+    const getData = () => {
+        // const lowerBound = page * limit; //todo after useCOntext
+        // const upperBound = (page + 1) * limit;
+
+        return data;
+        // .filter(
+        //     (v, index) => index < upperBound && index >= lowerBound
+        // );
+    };
     return (
         <div>
+            <Navbar />
             <Table
-                data={data}
-                total={data.length}
-                hasNextPage={(page, limit) => (page + 1) * limit < data.length}
+                data={getData()}
                 columns={[
                     {
                         title: 'Name',
@@ -26,10 +37,14 @@ export default function MyList() {
                 ]}
                 actions={[
                     {
-                        title: 'Remove',
+                        title: 'x',
                         onClick: onRemovePokemon,
                     },
                 ]}
+            />
+            <Pagination
+                total={data.length}
+                hasNextPage={(page, limit) => (page + 1) * limit < data.length}
             />
         </div>
     );
