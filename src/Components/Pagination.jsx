@@ -50,10 +50,12 @@ export default function List({ total, hasNextPage, onChangePage }) {
     // };
 
     useEffect(() => {
-        if (onChangePage) {
-            onChangePage(page, limit);
+        //if total goes down and current page is no longer exist, go back previous page.
+        const lowerBound = page * limit + 1;
+        if (page !== 0 && lowerBound > total) {
+            onPreviousPage();
         }
-    }, []);
+    }, [total, page, limit]);
     return (
         <ToolbarContainer>
             <ToolbarItem></ToolbarItem>
