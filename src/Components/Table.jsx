@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import styled from '@emotion/styled';
-import { TextButton, PageButton } from '../Components/Button';
-const PAGE_LIMIT_OPTIONS = [5, 10, 15, 20];
-export const PAGE_LIMIT = 10;
-const MainContainer = styled.div`
-    margin-top: 20px;
-`;
+import { DangerContainer } from './Alert';
+import Loading from './Loading';
 
-const Table = styled.table`
+const TableContainer = styled.table`
     padding: 3%;
     margin: auto;
+    margin-top: 20px;
     border-radius: 40px;
     border: 5px solid #3366ff;
 `;
@@ -38,71 +35,77 @@ const TableHeadingCell = styled.td`
     border-radius: 4px;
 `;
 
-export default function List({ data, columns, actions = [] }) {
+export default function Table({ data, columns, actions = [], loading, error }) {
+    if (loading) return <Loading> Loading </Loading>;
+    if (error)
+        return (
+            <DangerContainer>
+                {' '}
+                Error occured. please try again later{' '}
+            </DangerContainer>
+        );
     return (
-        <MainContainer>
-            <Table>
-                <thead>
-                    <tr>
-                        {columns.map(({ title }, index) => (
-                            <TableHeadingCell key={`td-${index}-${title}`}>
-                                {' '}
-                                {title}{' '}
-                            </TableHeadingCell>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {data?.length > 0
-                        ? data.map((value, index) => (
-                              <tr key={index}>
-                                  {columns.map(({ accessor, onDisplay }) => {
-                                      //   console.log({value, accessor})
-                                      return (
-                                          <TableCell
-                                              key={`td-${index}-${accessor}`}
-                                          >
-                                              {' '}
-                                              {onDisplay
-                                                  ? onDisplay(value)
-                                                  : value[accessor]}{' '}
-                                          </TableCell>
-                                      );
-                                  })}
-                                  <TableCell
-                                      style={{
-                                          //   backgroundColor: 'red',
-                                          marginRight: 0,
-                                          paddingRight: 0,
-                                          paddingLeft: 0,
-                                      }}
-                                  >
-                                      {actions.map(({ title, onClick }) => (
-                                          <button
-                                              style={{
-                                                  fontFamily: 'PokemonSolid',
-                                                  color: '#f3110d',
-                                                  border: 'none',
-                                                  backgroundColor: '#eeeeaa',
-                                                  margin: 0,
-                                                  padding: 0,
-                                                  fontSize: '20px',
-                                              }}
-                                              key={`${title}-${index}`}
-                                              onClick={(e) => {
-                                                  onClick(e, value);
-                                              }}
-                                          >
-                                              {' '}
-                                              {title}{' '}
-                                          </button>
-                                      ))}
-                                  </TableCell>
-                              </tr>
-                          ))
-                        : 'Not Found.'}
-                </tbody>
-            </Table>
-        </MainContainer>
+        <TableContainer>
+            <thead>
+                <tr>
+                    {columns.map(({ title }, index) => (
+                        <TableHeadingCell key={`td-${index}-${title}`}>
+                            {' '}
+                            {title}{' '}
+                        </TableHeadingCell>
+                    ))}
+                </tr>
+            </thead>
+            <tbody>
+                {data?.length > 0
+                    ? data.map((value, index) => (
+                          <tr key={index}>
+                              {columns.map(({ accessor, onDisplay }) => {
+                                  //   console.log({value, accessor})
+                                  return (
+                                      <TableCell
+                                          key={`td-${index}-${accessor}`}
+                                      >
+                                          {' '}
+                                          {onDisplay
+                                              ? onDisplay(value)
+                                              : value[accessor]}{' '}
+                                      </TableCell>
+                                  );
+                              })}
+                              <TableCell
+                                  style={{
+                                      //   backgroundColor: 'red',
+                                      marginRight: 0,
+                                      paddingRight: 0,
+                                      paddingLeft: 0,
+                                  }}
+                              >
+                                  {actions.map(({ title, onClick }) => (
+                                      <button
+                                          style={{
+                                              fontFamily: 'PokemonSolid',
+                                              color: '#f3110d',
+                                              border: 'none',
+                                              backgroundColor: '#eeeeaa',
+                                              margin: 0,
+                                              padding: 0,
+                                              fontSize: '20px',
+                                          }}
+                                          key={`${title}-${index}`}
+                                          onClick={(e) => {
+                                              onClick(e, value);
+                                          }}
+                                      >
+                                          {' '}
+                                          {title}{' '}
+                                      </button>
+                                  ))}
+                              </TableCell>
+                          </tr>
+                      ))
+                    : 'Not Found.'}
+            </tbody>
+        </TableContainer>
     );
 }
