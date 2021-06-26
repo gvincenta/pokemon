@@ -25,16 +25,16 @@
 
 ## Project Structure
 
-1. All Components are in /src/Components/
-2. All Pages are in /src/pages
-    1. Catch.jsx - displays the catch pokemon section
-    2. Detail.jsx - displays a pokemon's detail, with the ability to catch a pokemon
-    3. List.jsx - displays a (paginated) list of all pokemons as fetched from the api
-    4. MyList.jsx - displays a (paginated) list of all pokemons that you own
-3. /src/App.jsx serves the app with HashRouting.
-4. /src/Navbar.jsx displays a Navbar.
-5. /src/api.js contains all necessary (RESTful) API calls.
-6. /src/pokemon.js contains all necessary CRUD actions and interfaces for pokemons, using localStorage.
+1. All Components are in [/src/Components/](/src/Components/)
+2. All Pages are in [/src/Pages](/src/Pages)
+    1. [Catch.jsx](/src/Pages/Catch.jsx) - displays the catch pokemon section
+    2. [Detail.jsx](/src/Pages/Detail.jsx) - displays a pokemon's detail, with the ability to catch a pokemon
+    3. [List.jsx](/src/Pages/List.jsx) - displays a (paginated) list of all pokemons as fetched from the api
+    4. [MyList.jsx](/src/Pages/MyList.jsx) - displays a (paginated) list of all pokemons that you own
+3. [App.jsx](/src/App.jsx) serves the app with HashRouting.
+4. [Navbar.jsx](/src/Navbar.jsx) displays a Navbar.
+5. [api.js](/src/api.js) contains all necessary (RESTful) API calls.
+6. [pokemon.js](/src/pokemon.js) contains all necessary CRUD actions and interfaces for pokemons, using localStorage.
 
 ## How to catch a Pokemon
 
@@ -44,10 +44,10 @@
 
 ## Optimisations
 
-After running Lighthouse to inspect the website, these optimisations were made (mainly in /public/index.html) as suggested by Lighthouse :
+After running Lighthouse to inspect the website, these optimisations were made (mainly in [index.html](/public/index.html)) as suggested by Lighthouse :
 
 -   `<link rel="preconnect" href="https://pokeapi.co" />` for preloading api connection
--   `<link rel="preload" as="image" href="%PUBLIC_URL%/pokemonLogo.png" />` for preloading the [big pokemon image](/public/pokemonLogo.png)
+-   `<link rel="preload" as="image" href="%PUBLIC_URL%/pokemonLogo.png" />` for preloading the [large pokemon logo](/public/pokemonLogo.png)
 
 ## Hosting Related issues
 
