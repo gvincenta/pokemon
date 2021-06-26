@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { DangerContainer } from './Alert';
 import Loading from './Loading';
-
+//Main Container
 const Container = styled.div`
     grid-template-columns: auto auto;
     margin-top: 20px;
@@ -14,14 +14,14 @@ const Container = styled.div`
     justify-content: center;
     padding: 1%;
 `;
-
+//For each item in PokemonsGrid
 const Item = styled.div`
     padding: 20px;
     background-color: ${(props) => props.backgroundColor ?? '#faf0f0'};
     border-radius: 20px;
     box-shadow: 2px 2px 2px grey;
 `;
-
+//10 colors for each item in a grid
 const CARD_COLORS = [
     '#4dceb2',
     '#fb6a6a',
@@ -34,7 +34,9 @@ const CARD_COLORS = [
     '#9fa8da',
     '#82b1ff',
 ];
+//for showing all pokemon's list
 export const PokemonsGrid = ({ data, onClick, loading, error }) => {
+    //loading / error checks
     if (loading) return <Loading> Loading </Loading>;
     if (error)
         return (
@@ -62,6 +64,8 @@ export const PokemonsGrid = ({ data, onClick, loading, error }) => {
         </Container>
     );
 };
+
+//for PokemonDetailGrid
 const DetailContainer = styled.div`
     grid-template-columns: auto auto;
     background-color: #b7ced6;
@@ -71,7 +75,7 @@ const DetailContainer = styled.div`
     padding-left: 5%;
     border-radius: 20px;
 `;
-
+//for each item in PokemonDetailGrid
 const DetailItem = styled.div`
     padding: 2%;
 `;

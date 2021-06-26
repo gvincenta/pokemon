@@ -9,7 +9,7 @@ import Navbar from '../Navbar';
 
 const LIST_VIEW = 'LIST_VIEW';
 const DETAIL_VIEW = 'DETAIL_VIEW';
-
+//displays a list of all pokemons from the api
 export default function List() {
     //api data
     const [data, setData] = useState({

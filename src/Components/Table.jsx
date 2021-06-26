@@ -3,7 +3,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 import { DangerContainer } from './Alert';
 import Loading from './Loading';
-
+import { ActionButton } from './Button';
 const TableContainer = styled.table`
     padding: 3%;
     margin: auto;
@@ -34,8 +34,22 @@ const TableHeadingCell = styled.td`
     background-color: #eeeeaa;
     border-radius: 4px;
 `;
-
+const TableActionsCell = styled.td`
+    padding: 10px;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 25vw;
+    margin-right: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    background-color: #eeeeaa;
+    border-radius: 4px;
+`;
+//displays a parametrised datatable component
 export default function Table({ data, columns, actions = [], loading, error }) {
+    //loading , error checks
     if (loading) return <Loading> Loading </Loading>;
     if (error)
         return (
@@ -44,10 +58,12 @@ export default function Table({ data, columns, actions = [], loading, error }) {
                 Error occured. please try again later{' '}
             </DangerContainer>
         );
+
     return (
         <TableContainer>
             <thead>
                 <tr>
+                    {/* headings */}
                     {columns.map(({ title }, index) => (
                         <TableHeadingCell key={`td-${index}-${title}`}>
                             {' '}
@@ -61,8 +77,8 @@ export default function Table({ data, columns, actions = [], loading, error }) {
                     ? data.map((value, index) => (
                           <tr key={index}>
                               {columns.map(({ accessor, onDisplay }) => {
-                                  //   console.log({value, accessor})
                                   return (
+                                      //   data display
                                       <TableCell
                                           key={`td-${index}-${accessor}`}
                                       >
@@ -73,25 +89,10 @@ export default function Table({ data, columns, actions = [], loading, error }) {
                                       </TableCell>
                                   );
                               })}
-                              <TableCell
-                                  style={{
-                                      //   backgroundColor: 'red',
-                                      marginRight: 0,
-                                      paddingRight: 0,
-                                      paddingLeft: 0,
-                                  }}
-                              >
+                              {/* actions display */}
+                              <TableActionsCell>
                                   {actions.map(({ title, onClick }) => (
-                                      <button
-                                          style={{
-                                              fontFamily: 'PokemonSolid',
-                                              color: '#f3110d',
-                                              border: 'none',
-                                              backgroundColor: '#eeeeaa',
-                                              margin: 0,
-                                              padding: 0,
-                                              fontSize: '20px',
-                                          }}
+                                      <ActionButton
                                           key={`${title}-${index}`}
                                           onClick={(e) => {
                                               onClick(e, value);
@@ -99,9 +100,9 @@ export default function Table({ data, columns, actions = [], loading, error }) {
                                       >
                                           {' '}
                                           {title}{' '}
-                                      </button>
+                                      </ActionButton>
                                   ))}
-                              </TableCell>
+                              </TableActionsCell>
                           </tr>
                       ))
                     : 'Not Found.'}

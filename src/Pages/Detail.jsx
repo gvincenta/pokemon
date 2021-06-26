@@ -29,6 +29,7 @@ const FooterContainer = styled.div`
 const FooterItem = styled.div`
     text-align: center;
 `;
+//displays a pokemon's info with ability to catch pokemon.
 export default function Detail({ url, onClose }) {
     const [data, setData] = useState({ moves: [], types: [], sprites: [] });
     const [modal, setModal] = useState({
@@ -39,7 +40,7 @@ export default function Detail({ url, onClose }) {
         loading: true,
         error: false,
     });
-
+    //on page load, fetch pokemon's detail from api
     useEffect(() => {
         setFetchStatus({ loading: true, error: false });
         getPokemonDetail(url)
@@ -68,6 +69,8 @@ export default function Detail({ url, onClose }) {
                 setFetchStatus({ loading: false, error: true });
             });
     }, [url]);
+
+    //loading , error checks
     if (fetchStatus.loading)
         return (
             <>
@@ -90,6 +93,12 @@ export default function Detail({ url, onClose }) {
 
     return (
         <MainContainer>
+            {/* structure: 
+              name
+              image
+              catch section
+              moves & types 
+              back button */}
             <Name> {data?.forms?.[0]?.name ?? '???'} </Name>
             <PokemonImages sprites={data.sprites} />
 

@@ -1,6 +1,5 @@
-import React from 'react';
 import styled from '@emotion/styled';
-
+//Loading div
 const Loading = styled.div`
     font-family: PokemonSolid;
     padding: auto;

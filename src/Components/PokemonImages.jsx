@@ -1,5 +1,14 @@
 import React, { useState, useMemo } from 'react';
 import { PageButton } from '../Components/Button';
+import styled from '@emotion/styled';
+//main container
+const MainContainer = styled.div`
+    display: 'flex';
+    flex-direction: 'row';
+    justify-content: 'center';
+    align-content: 'center';
+`;
+//extracts sprites by looking up at certain properties only.
 const extractSprites = ({ sprites = {} }) => {
     const {
         back_default,
@@ -11,7 +20,7 @@ const extractSprites = ({ sprites = {} }) => {
         front_shiny,
         front_shiny_female,
     } = sprites;
-
+    //returns those that are not null as array.
     return [
         front_default,
         back_default,
@@ -26,9 +35,16 @@ const extractSprites = ({ sprites = {} }) => {
         back_shiny_female,
     ].filter((v) => Boolean(v));
 };
+//displays images of pokemons with previous / next button (as a small carousel).
 export default function PokemonImages({ sprites }) {
     const [page, setPage] = useState(0);
     const data = useMemo(() => extractSprites({ sprites }), [sprites]);
+
+    /**
+     *  carousel action:
+     * next
+     * previous
+     */
     const onPreviousPage = () => {
         setPage(page - 1);
     };
@@ -37,14 +53,7 @@ export default function PokemonImages({ sprites }) {
     };
 
     return (
-        <div
-            style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignContent: 'center',
-            }}
-        >
+        <MainContainer>
             {data.length > 0 ? (
                 <>
                     {' '}
@@ -56,7 +65,7 @@ export default function PokemonImages({ sprites }) {
                         {' '}
                         &lt;{' '}
                     </PageButton>
-                    <img src={data[page]} />
+                    <img src={data[page]} alt={data[page]} />
                     <PageButton
                         disabled={page === data.length - 1}
                         onClick={onNextPage}
@@ -69,6 +78,6 @@ export default function PokemonImages({ sprites }) {
             ) : (
                 'Not found.'
             )}
-        </div>
+        </MainContainer>
     );
 }

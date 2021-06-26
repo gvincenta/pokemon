@@ -10,7 +10,7 @@ const Nav = styled.nav`
 const Div = styled.div`
     text-align: center;
 `;
-
+//navbar component to navigate between list of all pokemons and list of my pokemons.
 export default function Navbar() {
     return (
         <Nav>

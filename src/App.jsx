@@ -2,6 +2,7 @@ import React from 'react';
 import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import List from './Pages/List';
 import MyList from './Pages/MyList';
+//entry point for the app, using a HashRouter.
 export default function App() {
     return (
         <Router>

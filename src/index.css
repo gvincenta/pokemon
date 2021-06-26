@@ -1,4 +1,5 @@
 @font-face {
+    /* custom pokemon font  */
     font-family: 'PokemonSolid';
     src: url('./fonts/pokemon_solid-webfont.woff2') format('woff2'),
         url('./fonts/pokemon_solid-webfont.woff') format('woff');
@@ -7,6 +8,7 @@
 }
 
 @font-face {
+    /* custom pokemon font */
     font-family: 'PokemonHollow';
     src: url('./fonts/pokemon_hollow-webfont.woff2') format('woff2'),
         url('./fonts/pokemon_hollow-webfont.woff') format('woff');
@@ -20,12 +22,12 @@ body {
         'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-size: 16px;
-    background-color: #eeeeaa;
+    font-size: 16px; /* default font size to be 16px */
+    background-color: #eeeeaa; /* entire app's background */
 }
 
 code {
-    font-size: 16px;
+    font-size: 16px; /* default font size to be 16px */
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
         monospace;
 }

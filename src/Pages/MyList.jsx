@@ -5,18 +5,21 @@ import Navbar from '../Navbar';
 import Pagination, { PAGE_LIMIT } from '../Components/Pagination';
 import { DangerButton } from '../Components/Button';
 import Modal from '../Components/Modal';
-
+//displays all pokemons that you own.
 export default function MyList() {
+    //data is from localstorage.
     const [data, setData] = useState(getMyPokemons());
+    //keeps track of pagination state.
     const [paginationState, setPaginationState] = useState({
         page: 0,
         limit: PAGE_LIMIT,
     });
+    //confirmation modal state for deleting a pokemon.
     const [modal, setModal] = useState({
         open: false,
         content: [],
     });
-
+    //once delete has been confirmed, delete the pokemon.
     const onRemovePokemon = (e, pokemon) => {
         removePokemon(pokemon);
         setData(getMyPokemons());
@@ -25,7 +28,7 @@ export default function MyList() {
             content: [],
         });
     };
-
+    //when X button is clicked, display a confirmation modal.
     const onOpenModal = (e, pokemon) => {
         setModal({
             open: true,
@@ -43,7 +46,7 @@ export default function MyList() {
             ),
         });
     };
-
+    //data display is paginated.
     const displayData = useMemo(() => {
         const lowerBound = paginationState.page * paginationState.limit;
         const upperBound = (paginationState.page + 1) * paginationState.limit;
@@ -52,6 +55,7 @@ export default function MyList() {
     }, [data, paginationState.page, paginationState.limit]);
     return (
         <div>
+            {/*  displays a list of pokemons that you own with a paginated table and a modal confirmation. */}
             <Navbar />
             <Table
                 data={displayData}

@@ -36,8 +36,8 @@ const Input = styled.input`
     font-size: 20px;
     max-width: 50vw;
 `;
-
-const CatchButton = ({ children, onClick }) => {
+//custom catch button with pokeball image
+const CatchButton = ({ onClick }) => {
     return (
         <img
             src={PokeBall}
@@ -56,21 +56,22 @@ const catchPokemon = () => {
     }
     return CATCH_FAIL;
 };
-
+//display catch pokemon section
 export default function Catch({ name, url }) {
+    //catching status
     const [catchState, setCatchState] = useState({
         status: CATCH_INIT,
         nickname: '',
     });
-
+    //creating status
     const [createStatus, setCreateStatus] = useState(CREATE_POKEMON_INIT);
-
+    //when catch button is clicked
     const onCatchPokemon = () => {
         setCreateStatus(CREATE_POKEMON_INIT);
         const catchStatus = catchPokemon();
         setCatchState({ ...catchState, status: catchStatus });
     };
-
+    //on form submission
     const onCreatePokemon = () => {
         const newCreateStatus = createPokemon({
             nickname: catchState.nickname,
@@ -82,6 +83,7 @@ export default function Catch({ name, url }) {
         }
         setCreateStatus(newCreateStatus);
     };
+    //displays creating status message inside modal
     const displayCreateStatusMessage = () => {
         switch (createStatus) {
             case CREATE_POKEMON_FAIL_EMPTY_NICKNAME:
@@ -104,17 +106,20 @@ export default function Catch({ name, url }) {
     };
     return (
         <BackgroundContainer>
+            {/* displays big catch button */}
             <CatchButton onClick={onCatchPokemon}> Catch Pokemon </CatchButton>
-
+            {/* if create succeed, display a message */}
             {createStatus === CREATE_POKEMON_SUCCESS && (
                 <SuccessContainer> Succeed!</SuccessContainer>
             )}
+            {/* if couldn't catch, display a messge */}
             {catchState.status === CATCH_FAIL && (
                 <DangerContainer>
                     {' '}
                     Could not catch pokemon, please try again.
                 </DangerContainer>
             )}
+            {/* if allowed to catch, display a form in a modal */}
             <Modal
                 open={catchState.status === CATCH_SUCCESS}
                 onClose={() => {
