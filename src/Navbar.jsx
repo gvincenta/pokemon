@@ -29,12 +29,14 @@ export default function Navbar() {
             <Nav>
                 <Div>
                     {' '}
-                    <Link to="/pokemons">
+                    <Link to="/">
                         {' '}
                         <TextButton
-                            active={window.location.pathname.startsWith(
-                                '/pokemons'
-                            )}
+                            active={
+                                !window.location.pathname.startsWith(
+                                    '/mypokemons'
+                                )
+                            }
                         >
                             {' '}
                             Pokedex{' '}

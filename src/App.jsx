@@ -13,8 +13,8 @@ export default function App() {
         <Router>
             <div style={{ height: '100vh', width: '100wh' }}>
                 <Switch>
-                    <Route path="/pokemons/" component={List} />
                     <Route path="/mypokemons/" component={MyList} />
+                    <Route path="/" component={List} />
                 </Switch>
             </div>
         </Router>
