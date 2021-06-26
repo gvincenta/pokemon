@@ -18,6 +18,7 @@ const ToolbarItem = styled.div`
 const ToolbarItemCenter = styled.div`
     padding: 2%;
     text-align: center;
+    align-self: center;
 `;
 const ToolbarItemRight = styled.div`
     padding: 2%;
