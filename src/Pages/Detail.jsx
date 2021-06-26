@@ -5,8 +5,7 @@ import PokemonImages from '../Components/PokemonImages';
 import styled from '@emotion/styled';
 import Modal from '../Components/Modal';
 import { PokemonDetailGrid } from '../Components/Grid';
-import Button from '../Components/Button';
-import { TextButton } from '../Components/Button';
+import { TextButton, PageButton } from '../Components/Button';
 import { DangerContainer } from '../Components/Alert';
 import Loading from '../Components/Loading';
 
@@ -73,25 +72,24 @@ export default function Detail({ url, onClose }) {
         return (
             <>
                 {' '}
-                <Button onClick={onClose}>&lt;</Button>{' '}
                 <Loading> Loading </Loading>{' '}
+                <PageButton onClick={onClose}>&lt;</PageButton>{' '}
             </>
         );
     if (fetchStatus.error)
         return (
             <>
                 {' '}
-                <Button onClick={onClose}>&lt;</Button>{' '}
                 <DangerContainer>
                     {' '}
                     Error occured. please try again later{' '}
                 </DangerContainer>{' '}
+                <PageButton onClick={onClose}>&lt;</PageButton>
             </>
         );
 
     return (
         <MainContainer>
-            <Button onClick={onClose}>&lt;</Button>
             <Name> {data?.forms?.[0]?.name ?? '???'} </Name>
             <PokemonImages sprites={data.sprites} />
 
@@ -137,6 +135,7 @@ export default function Detail({ url, onClose }) {
                     });
                 }}
             />
+            <PageButton onClick={onClose}>&lt;</PageButton>
         </MainContainer>
     );
 }
