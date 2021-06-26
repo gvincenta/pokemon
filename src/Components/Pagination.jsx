@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import styled from '@emotion/styled';
-import { PageButton } from '../Components/Button';
+import { TextButton } from '../Components/Button';
 export const PAGE_LIMIT = 10;
 
 const ToolbarContainer = styled.div`
@@ -14,6 +14,7 @@ const ToolbarContainer = styled.div`
 
 const ToolbarItem = styled.div`
     padding: 2%;
+    font-family: PokemonSolid;
 `;
 const ToolbarItemCenter = styled.div`
     padding: 2%;
@@ -27,8 +28,11 @@ const ToolbarItemRight = styled.div`
 
 export default function List({ total, hasNextPage, onChangePage }) {
     const [page, setPage] = useState(0);
-    const [limit, setLimit] = useState(PAGE_LIMIT);
-
+    const [limit] = useState(PAGE_LIMIT);
+    const onFirstPage = () => {
+        onChangePage && onChangePage(0, limit);
+        setPage(0);
+    };
     const onPreviousPage = () => {
         onChangePage && onChangePage(page - 1, limit);
         setPage(page - 1);
@@ -37,18 +41,10 @@ export default function List({ total, hasNextPage, onChangePage }) {
         onChangePage && onChangePage(page + 1, limit);
         setPage(page + 1);
     };
-
-    // const getData = () => {
-    //     if (onChangePage) {
-    //         return data;
-    //     }
-    //     const lowerBound = page * limit;
-    //     const upperBound = (page + 1) * limit;
-
-    //     return data.filter(
-    //         (v, index) => index < upperBound && index >= lowerBound
-    //     );
-    // };
+    const onLastPage = () => {
+        onChangePage && onChangePage(Math.ceil(total / limit), limit);
+        setPage(Math.ceil(total / limit));
+    };
 
     useEffect(() => {
         //if total goes down and current page is no longer exist, go back previous page.
@@ -59,15 +55,16 @@ export default function List({ total, hasNextPage, onChangePage }) {
     }, [total, page, limit]);
     return (
         <ToolbarContainer>
-            <ToolbarItem></ToolbarItem>
-            <ToolbarItemCenter> Total: {total} </ToolbarItemCenter>
-            <ToolbarItem></ToolbarItem>
             <ToolbarItem>
                 {' '}
-                <PageButton disabled={page === 0} onClick={onPreviousPage}>
+                <TextButton
+                    active={true}
+                    disabled={page === 0}
+                    onClick={onPreviousPage}
+                >
                     {' '}
                     &lt;{' '}
-                </PageButton>{' '}
+                </TextButton>{' '}
             </ToolbarItem>
             <ToolbarItemCenter>
                 {' '}
@@ -75,13 +72,37 @@ export default function List({ total, hasNextPage, onChangePage }) {
             </ToolbarItemCenter>
             <ToolbarItemRight>
                 {' '}
-                <PageButton
+                <TextButton
+                    active={true}
                     disabled={hasNextPage ? !hasNextPage(page, limit) : true}
                     onClick={onNextPage}
                 >
                     {' '}
                     &gt;{' '}
-                </PageButton>{' '}
+                </TextButton>{' '}
+            </ToolbarItemRight>
+            <ToolbarItem>
+                {' '}
+                <TextButton
+                    active={true}
+                    disabled={page === 0}
+                    onClick={onFirstPage}
+                >
+                    {' '}
+                    &laquo;
+                </TextButton>{' '}
+            </ToolbarItem>
+            <ToolbarItemCenter> Total: {total} </ToolbarItemCenter>
+
+            <ToolbarItemRight>
+                <TextButton
+                    active={true}
+                    disabled={hasNextPage ? !hasNextPage(page, limit) : true}
+                    onClick={onLastPage}
+                >
+                    {' '}
+                    &raquo;
+                </TextButton>{' '}
             </ToolbarItemRight>
         </ToolbarContainer>
     );
