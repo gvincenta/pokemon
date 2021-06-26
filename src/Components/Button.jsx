@@ -30,14 +30,6 @@ export const TextButton = styled.button`
     border: 0px;
 `;
 
-export const ViewButton = styled.button`
-    background-color: #faf0f0;
-    z-index: 0;
-    padding: 6px 12px;
-    border: none;
-    color: #337ab7;
-    border-radius: 4px;
-`;
 export const PageButton = styled.button`
     text-align: center;
     background-color: #3366ff;
@@ -51,5 +43,23 @@ export const PageButton = styled.button`
         background-color: #96a9e2;
     }
 `;
+export const DangerButton = styled.button`
+    text-align: center;
+    background-color: #f3110d;
+    padding: 6px 12px;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 20px;
+`;
 
+export const SecondaryButton = styled.button`
+    text-align: center;
+    background-color: #5a686f;
+    padding: 6px 12px;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 20px;
+`;
 export default Button;

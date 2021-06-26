@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
-import Button from './Button';
+import { SecondaryButton } from './Button';
 //modal adapted from https://www.w3schools.com/howto/howto_css_modals.asp
 const ModalContainer = styled.div`
     display: ${(props) =>
@@ -25,19 +25,6 @@ const ModalContent = styled.div`
     width: 80%; /* Could be more or less, depending on screen size */
 `;
 
-const ModalCloseButton = styled.span`
-    background-color: #fefefe;
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    &:hover,
-    &:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
-`;
 export default function Modal({ open, onClose, content }) {
     return (
         <ModalContainer open={open}>
@@ -45,7 +32,10 @@ export default function Modal({ open, onClose, content }) {
                 {content}
                 <div style={{ textAlign: 'center', marginTop: '10px' }}>
                     {' '}
-                    <Button onClick={onClose}> Close </Button>{' '}
+                    <SecondaryButton onClick={onClose}>
+                        {' '}
+                        Close{' '}
+                    </SecondaryButton>{' '}
                 </div>
             </ModalContent>
         </ModalContainer>
