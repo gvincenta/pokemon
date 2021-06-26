@@ -1,5 +1,5 @@
 @font-face {
-    font-family: 'PokemonHollow';
+    font-family: 'PokemonSolid';
     src: url('./fonts/pokemon_solid-webfont.woff2') format('woff2'),
         url('./fonts/pokemon_solid-webfont.woff') format('woff');
     font-weight: normal;
@@ -7,7 +7,7 @@
 }
 
 @font-face {
-    font-family: 'PokemonSolid';
+    font-family: 'PokemonHollow';
     src: url('./fonts/pokemon_hollow-webfont.woff2') format('woff2'),
         url('./fonts/pokemon_hollow-webfont.woff') format('woff');
     font-weight: normal;
