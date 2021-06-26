@@ -23,26 +23,17 @@ const Item = styled.div`
 `;
 
 const CARD_COLORS = [
-    '#42a5f5',
-    '#00acc1',
-    '#4db6ac',
-    '#7cb342',
-    '#9e9d24',
-    '#ff6f00',
-    '#9e9e9e',
-    '#90a4ae',
+    '#4dceb2',
+    '#fb6a6a',
+    '#77bdfa',
+    '#7d518e',
+    '#b2736d',
+    '#e37c30',
+    '#e57373',
+    '#b39ddb',
     '#9fa8da',
     '#82b1ff',
 ];
-/* '#4dceb2',
-'#fb6a6a', 
-'#77bdfa', 
-'#7d518e', 
-'#b2736d', 
-'#e37c30', 
-'#e57373', 
-'#b39ddb',  */
-/*    ]*/
 export const PokemonsGrid = ({ data, onClick, loading, error }) => {
     if (loading) return <Loading> Loading </Loading>;
     if (error)
