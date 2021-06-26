@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
 import Button from '../Components/Button';
 import {
@@ -10,6 +9,8 @@ import {
     CREATE_POKEMON_INIT,
 } from '../pokemon';
 import PokeBall from '../pokeball.png';
+import Modal from '../Components/Modal';
+import { SuccessContainer, DangerContainer } from '../Components/Alert';
 
 const CATCH_SUCCESS = 'CATCH_SUCCESS';
 const CATCH_FAIL = 'CATCH_FAIL';
@@ -26,19 +27,6 @@ const BackgroundContainer = styled.div`
     row-gap: 10px;
 `;
 
-const SuccessContainer = styled.div`
-    color: #04aa6d;
-    text-align: center;
-    font-weight: bold;
-    font-size: 20px;
-`;
-const DangerContainer = styled.div`
-    color: #f3110d;
-    text-align: center;
-
-    font-weight: bold;
-    font-size: 20px;
-`;
 const Label = styled.label`
     font-family: PokemonSolid;
     color: #3366ff;
@@ -50,7 +38,14 @@ const Input = styled.input`
 `;
 
 const CatchButton = ({ children, onClick }) => {
-    return <img src={PokeBall} width={300} onClick={onClick}></img>;
+    return (
+        <img
+            src={PokeBall}
+            width={300}
+            onClick={onClick}
+            alt="pokeball_catch_image"
+        ></img>
+    );
 };
 //catch pokemon with 50% chance. if value < 0.5, then succeed.
 const catchPokemon = () => {
@@ -63,15 +58,12 @@ const catchPokemon = () => {
 };
 
 export default function Catch({ name, url }) {
-    const [data, setData] = useState({ moves: [], types: [] });
     const [catchState, setCatchState] = useState({
         status: CATCH_INIT,
         nickname: '',
     });
 
     const [createStatus, setCreateStatus] = useState(CREATE_POKEMON_INIT);
-
-    let location = useLocation();
 
     const onCatchPokemon = () => {
         setCreateStatus(CREATE_POKEMON_INIT);
@@ -92,8 +84,6 @@ export default function Catch({ name, url }) {
     };
     const displayCreateStatusMessage = () => {
         switch (createStatus) {
-            case CREATE_POKEMON_SUCCESS:
-                return <SuccessContainer> Succeed!</SuccessContainer>;
             case CREATE_POKEMON_FAIL_EMPTY_NICKNAME:
                 return (
                     <DangerContainer>
@@ -112,60 +102,51 @@ export default function Catch({ name, url }) {
                 return null;
         }
     };
-    const displayCatch = () => {
-        switch (catchState.status) {
-            case CATCH_INIT:
-                return (
-                    <CatchButton onClick={onCatchPokemon}>
-                        {' '}
-                        Catch Pokemon{' '}
-                    </CatchButton>
-                );
-            case CATCH_SUCCESS:
-                return (
-                    <>
-                        <MainContainer>
-                            <Label> Nickname: </Label>
-                            <Input
-                                value={catchState.nickname}
-                                onChange={(e) => {
-                                    setCatchState({
-                                        ...catchState,
-                                        nickname: e.target.value,
-                                    });
-                                }}
-                            />
-                            <Button
-                                onClick={onCreatePokemon}
-                                style={{ marginTop: '10px' }}
-                            >
-                                {' '}
-                                Save{' '}
-                            </Button>
-                        </MainContainer>
-                    </>
-                );
-            case CATCH_FAIL:
-                return (
-                    <>
-                        <CatchButton onClick={onCatchPokemon}>
-                            {' '}
-                            Catch Pokemon{' '}
-                        </CatchButton>
-                        <DangerContainer>
-                            {' '}
-                            Could not catch pokemon, please try again.
-                        </DangerContainer>
-                    </>
-                );
-            default:
-                return;
-        }
-    };
     return (
         <BackgroundContainer>
-            {displayCatch()}
-            {displayCreateStatusMessage()}
+            <CatchButton onClick={onCatchPokemon}> Catch Pokemon </CatchButton>
+
+            {createStatus === CREATE_POKEMON_SUCCESS && (
+                <SuccessContainer> Succeed!</SuccessContainer>
+            )}
+            {catchState.status === CATCH_FAIL && (
+                <DangerContainer>
+                    {' '}
+                    Could not catch pokemon, please try again.
+                </DangerContainer>
+            )}
+            <Modal
+                open={catchState.status === CATCH_SUCCESS}
+                onClose={() => {
+                    setCreateStatus(CREATE_POKEMON_INIT);
+                    setCatchState({
+                        status: CATCH_INIT,
+                        nickname: '',
+                    });
+                }}
+                content={
+                    <MainContainer>
+                        <Label> Nickname: </Label>
+                        <Input
+                            value={catchState.nickname}
+                            onChange={(e) => {
+                                setCatchState({
+                                    ...catchState,
+                                    nickname: e.target.value,
+                                });
+                            }}
+                        />
+                        {displayCreateStatusMessage()}
+                        <Button
+                            onClick={onCreatePokemon}
+                            style={{ marginTop: '10px' }}
+                        >
+                            {' '}
+                            Save{' '}
+                        </Button>
+                    </MainContainer>
+                }
+            />
         </BackgroundContainer>
     );
 }
