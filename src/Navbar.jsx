@@ -19,9 +19,7 @@ export default function Navbar() {
                 <Link to="/">
                     {' '}
                     <TextButton
-                        active={
-                            !window.location.pathname.startsWith('/mypokemons')
-                        }
+                        active={!window.location.hash.includes('/mypokemons')}
                     >
                         {' '}
                         Pokedex{' '}
@@ -33,9 +31,7 @@ export default function Navbar() {
                 <Link to="/mypokemons">
                     {' '}
                     <TextButton
-                        active={window.location.pathname.startsWith(
-                            '/mypokemons'
-                        )}
+                        active={window.location.hash.includes('/mypokemons')}
                     >
                         {' '}
                         My Pokedex{' '}
