@@ -8,7 +8,7 @@
 
 1. Pokedex - List of all pokemons as fetched from the api
 2. My Pokedex - List of all pokemons that you own
-3. [PokeBall](/public/pokemonLogo.png) - A ball to catch a pokemon
+3. [PokeBall](/src/pokeball.png) - A ball to catch a pokemon
 
 ## Running This Project
 
@@ -40,14 +40,14 @@
 
 1. Go to Pokedex
 2. Select a pokemon, you will be redirected to another page
-3. Click the big [PokeBall](/public/pokemonLogo.png) until there's a prompt to insert nickname and save.
+3. Click the big [PokeBall](/src/pokeball.png) until there's a prompt to insert nickname and save.
 
 ## Optimisations
 
 After running Lighthouse to inspect the website, these optimisations were made (mainly in /public/index.html) as suggested by Lighthouse :
 
 -   `<link rel="preconnect" href="https://pokeapi.co" />` for preloading api connection
--   `<link rel="preload" as="image" href="%PUBLIC_URL%/pokemonLogo.png" />` for preloading the big pokemon image
+-   `<link rel="preload" as="image" href="%PUBLIC_URL%/pokemonLogo.png" />` for preloading the [big pokemon image](/public/pokemonLogo.png)
 
 ## Hosting Related issues
 
