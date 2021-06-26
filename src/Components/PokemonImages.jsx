@@ -3,10 +3,10 @@ import { PageButton } from '../Components/Button';
 import styled from '@emotion/styled';
 //main container
 const MainContainer = styled.div`
-    display: 'flex';
-    flex-direction: 'row';
-    justify-content: 'center';
-    align-content: 'center';
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
 `;
 //extracts sprites by looking up at certain properties only.
 const extractSprites = ({ sprites = {} }) => {
