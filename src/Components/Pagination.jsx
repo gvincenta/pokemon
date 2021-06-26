@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 import styled from '@emotion/styled';
 import { PageButton } from '../Components/Button';
-const PAGE_LIMIT_OPTIONS = [5, 10, 15, 20];
 export const PAGE_LIMIT = 10;
 
 const ToolbarContainer = styled.div`
@@ -24,10 +23,6 @@ const ToolbarItemRight = styled.div`
     padding: 2%;
     text-align: right;
 `;
-const Select = styled.select`
-    padding: 6px 12px;
-    border-radius: 4px;
-`;
 
 export default function List({ total, hasNextPage, onChangePage }) {
     const [page, setPage] = useState(0);
@@ -42,11 +37,6 @@ export default function List({ total, hasNextPage, onChangePage }) {
         setPage(page + 1);
     };
 
-    const onPageLimitChange = (e) => {
-        const newLimit = Number(e.target.value);
-        onChangePage && onChangePage(page, newLimit);
-        setLimit(newLimit);
-    };
     // const getData = () => {
     //     if (onChangePage) {
     //         return data;

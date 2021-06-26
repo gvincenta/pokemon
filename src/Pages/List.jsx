@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { getAllPokemons } from '../api';
 import { getOwnedTotals } from '../pokemon';
-import Table from '../Components/Table';
 import Grid from '../Components/Grid';
 import Pagination from '../Components/Pagination';
 

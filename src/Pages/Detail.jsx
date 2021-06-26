@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getPokemonDetail } from '../api';
 import Catch from './Catch';
 import PokemonImages from '../Components/PokemonImages';
 import styled from '@emotion/styled';
 import Modal from '../Components/Modal';
 import FlexRow from '../Components/FlexRow';
-import PokemonLogo from '../pokemonLogo.png';
 import Button from '../Components/Button';
 import { TextButton } from '../Components/Button';
 

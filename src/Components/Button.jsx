@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from '@emotion/styled';
 //#ef5350
 const Button = styled.button`
