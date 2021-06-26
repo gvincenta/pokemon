@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { PageButton } from '../Components/Button';
 const extractSprites = ({ sprites = {} }) => {
     const {
@@ -45,23 +45,30 @@ export default function PokemonImages({ sprites }) {
                 alignContent: 'center',
             }}
         >
-            <PageButton
-                disabled={page === 0}
-                onClick={onPreviousPage}
-                style={{ marginTop: 20 }}
-            >
-                {' '}
-                &lt;{' '}
-            </PageButton>
-            <img src={data[page]} />
-            <PageButton
-                disabled={page === data.length - 1}
-                onClick={onNextPage}
-                style={{ marginTop: 20 }}
-            >
-                {' '}
-                &gt;{' '}
-            </PageButton>{' '}
+            {data.length > 0 ? (
+                <>
+                    {' '}
+                    <PageButton
+                        disabled={page === 0}
+                        onClick={onPreviousPage}
+                        style={{ marginTop: 20 }}
+                    >
+                        {' '}
+                        &lt;{' '}
+                    </PageButton>
+                    <img src={data[page]} />
+                    <PageButton
+                        disabled={page === data.length - 1}
+                        onClick={onNextPage}
+                        style={{ marginTop: 20 }}
+                    >
+                        {' '}
+                        &gt;{' '}
+                    </PageButton>{' '}
+                </>
+            ) : (
+                'Not found.'
+            )}
         </div>
     );
 }
