@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-//#ef5350
+
 const Button = styled.button`
     text-align: center;
     background-color: #3366ff;
@@ -7,7 +7,7 @@ const Button = styled.button`
     color: white;
     font-weight: bold;
     border: none;
-    min-height: 60px;
+    min-height: 50px;
     font-size: 16px;
     min-width: 120px;
     border-radius: 20px;
@@ -26,13 +26,16 @@ export const TextButton = styled.button`
     padding-bottom: 12px;
     color: #3366ff;
     font-weight: bold;
-    min-height: 60px;
-    min-width: 60px;
+    min-height: 50px;
+    min-width: 50px;
     padding-left: 20px;
     padding-right: 20px;
     background-color: #eeeeaa;
     border-color: #eeeeaa;
     border: 0px;
+    &:disabled {
+        color: #96a9e2;
+    }
 `;
 
 export const PageButton = styled.button`
@@ -43,8 +46,8 @@ export const PageButton = styled.button`
     font-weight: bold;
     border: none;
     border-radius: 100%;
-    min-height: 60px;
-    min-width: 60px;
+    min-height: 50px;
+    min-width: 50px;
     max-height: 40px;
     &:disabled {
         background-color: #96a9e2;
@@ -58,10 +61,11 @@ export const DangerButton = styled.button`
     color: white;
     font-weight: bold;
     border: none;
-    min-height: 60px;
+    min-height: 50px;
     min-width: 120px;
     border-radius: 20px;
     font-size: 16px;
+    margin-top: 10px;
 `;
 
 export const SecondaryButton = styled.button`
@@ -70,7 +74,7 @@ export const SecondaryButton = styled.button`
     padding: 6px 12px;
     color: white;
     font-weight: bold;
-    min-height: 60px;
+    min-height: 50px;
     min-width: 120px;
     border: none;
     border-radius: 20px;
