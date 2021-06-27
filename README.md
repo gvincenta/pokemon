@@ -2,7 +2,7 @@
 
 -   This project is a response to Tokopedia's Web Project.
 -   This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
--   This project is hosted with Netlify.
+-   This project is hosted [here](https://silly-shaw-81aedb.netlify.app/?#/) with Netlify.
 
 ## Glossary
 
@@ -42,12 +42,13 @@
 2. Select a pokemon, you will be redirected to another page
 3. Click the big [PokeBall](/src/pokeball.png) until there's a prompt to insert nickname and save.
 
-## Optimisations
+## Optimisations with Lighthouse
 
 After running Lighthouse to inspect the website, these optimisations were made (mainly in [index.html](/public/index.html)) as suggested by Lighthouse :
 
 -   `<link rel="preconnect" href="https://pokeapi.co" />` for preloading api connection
 -   `<link rel="preload" as="image" href="%PUBLIC_URL%/pokemonLogo.png" />` for preloading the [large pokemon logo](/public/pokemonLogo.png)
+-   static files caching are hosting-dependent issues (e.g. preloading fonts and react's build files), and Netlify seems to handle it well, so no further optimisations were made. If this project is to be hosted somewhere else, the server serving it must handle the caching, click [here](https://web.dev/uses-long-cache-ttl/?utm_source=lighthouse&utm_medium=devtools) for more info.
 
 ## Hosting Related issues
 
