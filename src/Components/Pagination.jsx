@@ -60,7 +60,7 @@ const setCachedPageNumber = (pageNumber, upperBound) => {
 export default function Pagination({ total = 0, hasNextPage, onChangePage }) {
     const upperBound = useMemo(() => {
         return Math.ceil(total / PAGE_LIMIT);
-    }, [total, PAGE_LIMIT]);
+    }, [total]);
 
     const [page, setPage] = useState(
         getCachedPageNumber(Math.ceil(total / PAGE_LIMIT)) ?? 0
@@ -104,7 +104,7 @@ export default function Pagination({ total = 0, hasNextPage, onChangePage }) {
         setCachedPageNumber(pageNumber, upperBound);
     };
     //when page number is clicked, ask to jump to what page.
-    const onOpenModal = (e, pokemon) => {
+    const onOpenModal = () => {
         setJumpToPage(page + 1); //display starts from 1, not 0.
         setOpenModal(true);
     };
@@ -115,7 +115,7 @@ export default function Pagination({ total = 0, hasNextPage, onChangePage }) {
         if (page !== 0 && lowerBound > total) {
             onPreviousPage();
         }
-    }, [total, page, PAGE_LIMIT]);
+    }, [total, page]);
     return (
         <ToolbarContainer>
             <ToolbarItem>
@@ -132,7 +132,11 @@ export default function Pagination({ total = 0, hasNextPage, onChangePage }) {
             <ToolbarItemCenter>
                 {' '}
                 Page{' '}
-                <TextButton active={true} onClick={onOpenModal}>
+                <TextButton
+                    active={true}
+                    disabled={Math.max(upperBound, 1) === 1}
+                    onClick={onOpenModal}
+                >
                     {' '}
                     {page + 1}{' '}
                 </TextButton>
