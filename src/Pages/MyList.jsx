@@ -4,7 +4,7 @@ import { getMyPokemons, removePokemon } from '../pokemon';
 import Navbar from '../Navbar';
 import Pagination, { PAGE_LIMIT } from '../Components/Pagination';
 import { DangerButton } from '../Components/Button';
-import Modal from '../Components/Modal';
+import Modal, { CenteredContent } from '../Components/Modal';
 //displays all pokemons that you own.
 export default function MyList() {
     //data is from localstorage.
@@ -33,7 +33,7 @@ export default function MyList() {
         setModal({
             open: true,
             content: (
-                <div style={{ textAlign: 'center' }}>
+                <CenteredContent>
                     {' '}
                     Would you like to delete: <br /> {pokemon.name} -{' '}
                     {pokemon.nickname} ? <br /> This action cannot be undone.
@@ -42,7 +42,7 @@ export default function MyList() {
                         {' '}
                         Yes{' '}
                     </DangerButton>{' '}
-                </div>
+                </CenteredContent>
             ),
         });
     };
