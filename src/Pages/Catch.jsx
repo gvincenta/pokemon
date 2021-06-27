@@ -9,7 +9,7 @@ import {
     CREATE_POKEMON_INIT,
 } from '../pokemon';
 import PokeBall from '../pokeball.png';
-import Modal from '../Components/Modal';
+import Modal, { Label, Input } from '../Components/Modal';
 import { SuccessContainer, DangerContainer } from '../Components/Alert';
 
 const CATCH_SUCCESS = 'CATCH_SUCCESS';
@@ -27,15 +27,6 @@ const BackgroundContainer = styled.div`
     row-gap: 10px;
 `;
 
-const Label = styled.label`
-    font-family: PokemonSolid;
-    color: #3366ff;
-`;
-
-const Input = styled.input`
-    font-size: 20px;
-    max-width: 50vw;
-`;
 //custom catch button with pokeball image
 const CatchButton = ({ onClick }) => {
     return (

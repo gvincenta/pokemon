@@ -25,6 +25,20 @@ const ModalContent = styled.div`
     width: 80%; /* Could be more or less, depending on screen size */
 `;
 
+export const CenteredContent = styled.div`
+    text-align: center;
+`;
+
+export const Label = styled.label`
+    font-family: PokemonSolid;
+    color: #3366ff;
+`;
+
+export const Input = styled.input`
+    font-size: 20px;
+    max-width: 50vw;
+`;
+
 export default function Modal({ open, onClose, content }) {
     return (
         <ModalContainer open={open}>
