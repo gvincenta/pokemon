@@ -190,6 +190,7 @@ export default function Pagination({ total = 0, hasNextPage, onChangePage }) {
                     <CenteredContent>
                         <form
                             onSubmit={(e) => {
+                                e.preventDefault(); //avoid reloading page.
                                 onJumpPage(
                                     e,
                                     Math.min(

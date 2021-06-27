@@ -63,7 +63,8 @@ export default function Catch({ name, url }) {
         setCatchState({ ...catchState, status: catchStatus });
     };
     //on form submission
-    const onCreatePokemon = () => {
+    const onCreatePokemon = (e) => {
+        e.preventDefault();
         const newCreateStatus = createPokemon({
             nickname: catchState.nickname,
             name,
