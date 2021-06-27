@@ -180,37 +180,39 @@ export default function Pagination({ total = 0, hasNextPage, onChangePage }) {
                 open={openModal}
                 content={
                     <CenteredContent>
-                        {' '}
-                        <Label> Jump to page:</Label>
-                        <Input
-                            type="Number"
-                            max={Math.max(upperBound, 1)}
-                            min={1}
-                            value={jumpToPage}
-                            onChange={(e) => {
-                                if (e.target.value > Math.max(upperBound, 1)) {
-                                    setJumpToPage(Math.max(upperBound, 1));
-                                }
-                                setJumpToPage(e.target.value ?? 1);
+                        <form
+                            onSubmit={(e) => {
+                                onJumpPage(
+                                    e,
+                                    Math.min(
+                                        upperBound,
+                                        Math.max(0, jumpToPage - 1)
+                                    )
+                                ); //display is from 1, actual paging is from 0
+                                setOpenModal(false);
                             }}
-                        />
-                        <br />
-                        <Button
-                            style={{ marginTop: '10px' }}
-                            onClick={
-                                (e) =>
-                                    onJumpPage(
-                                        e,
-                                        Math.min(
-                                            upperBound,
-                                            Math.max(0, jumpToPage - 1)
-                                        )
-                                    ) //display is from 1, actual paging is from 0
-                            }
                         >
-                            {' '}
-                            Submit{' '}
-                        </Button>{' '}
+                            <Label> Jump to page:</Label>
+                            <Input
+                                type="Number"
+                                max={Math.max(upperBound, 1)}
+                                min={1}
+                                value={jumpToPage}
+                                onChange={(e) => {
+                                    if (
+                                        e.target.value > Math.max(upperBound, 1)
+                                    ) {
+                                        setJumpToPage(Math.max(upperBound, 1));
+                                    }
+                                    setJumpToPage(e.target.value ?? 1);
+                                }}
+                            />
+                            <br />
+                            <Button style={{ marginTop: '10px' }} type="submit">
+                                {' '}
+                                Submit{' '}
+                            </Button>{' '}
+                        </form>
                     </CenteredContent>
                 }
                 onClose={() => {

@@ -122,24 +122,23 @@ export default function Catch({ name, url }) {
                 }}
                 content={
                     <MainContainer>
-                        <Label> Nickname: </Label>
-                        <Input
-                            value={catchState.nickname}
-                            onChange={(e) => {
-                                setCatchState({
-                                    ...catchState,
-                                    nickname: e.target.value,
-                                });
-                            }}
-                        />
-                        {displayCreateStatusMessage()}
-                        <Button
-                            onClick={onCreatePokemon}
-                            style={{ marginTop: '10px' }}
-                        >
-                            {' '}
-                            Save{' '}
-                        </Button>
+                        <form onSubmit={onCreatePokemon}>
+                            <Label> Nickname: </Label>
+                            <Input
+                                value={catchState.nickname}
+                                onChange={(e) => {
+                                    setCatchState({
+                                        ...catchState,
+                                        nickname: e.target.value,
+                                    });
+                                }}
+                            />
+                            {displayCreateStatusMessage()}
+                            <Button type="submit" style={{ marginTop: '10px' }}>
+                                {' '}
+                                Save{' '}
+                            </Button>
+                        </form>
                     </MainContainer>
                 }
             />
