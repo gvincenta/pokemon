@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import Modal, { CenteredContent, Label, Input } from '../Components/Modal';
 import styled from '@emotion/styled';
-import Button, { TextButton } from './Button';
+import Button, { PageButton, TextButton } from './Button';
 export const PAGE_LIMIT = 10; //how many items shown in a page
 //main container
 const ToolbarContainer = styled.div`
@@ -132,14 +132,18 @@ export default function Pagination({ total = 0, hasNextPage, onChangePage }) {
             <ToolbarItemCenter>
                 {' '}
                 Page{' '}
-                <TextButton
+                <PageButton
                     active={true}
                     disabled={Math.max(upperBound, 1) === 1}
                     onClick={onOpenModal}
+                    style={{
+                        minWidth: '20px',
+                        minHeight: '20px',
+                    }}
                 >
                     {' '}
                     {page + 1}{' '}
-                </TextButton>
+                </PageButton>
                 / {Math.max(upperBound, 1)}{' '}
             </ToolbarItemCenter>
             <ToolbarItemRight>
